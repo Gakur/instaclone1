@@ -1,11 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
-# from cloudinary.models import CloudinaryField
+from cloudinary.models import CloudinaryField
 
 # Create your models here
 class Post (models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='images')
-    # image = CloudinaryField('image')
+    image = CloudinaryField('image')
     image_name = models.CharField(max_length=50)
     image_caption = models.TextField()
     posted_on = models.DateField(auto_now_add=True)
@@ -58,7 +58,7 @@ class Post (models.Model):
 # profile model
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    # profile_photo=CloudinaryField('image')
+    profile_photo=CloudinaryField('image')
     bio = models.TextField(max_length=500, blank=True, null=True)
     contact = models.CharField(max_length=50, blank=True, null=True)
 
