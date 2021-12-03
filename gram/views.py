@@ -144,3 +144,19 @@ def add_comment(request):
         return redirect('/picture/' + str(post_id))
     else:
         return redirect('/')
+
+
+# user profile page with images
+@login_required(login_url='/accounts/login/')
+def user_profile(request, id):
+    # check if user exists
+    if User.objects.filter(id=id).exists():
+        # get the user
+        user = User.objects.get(id=id)
+        # get all the images for the user
+        posts = Post.objects.filter(user_id=id)
+        # get the profile of the user
+        profile = Profile.objects.filter(user_id=id).first()
+        return render(request, 'user-profile.html', {'posts': posts, 'profile': profile, 'user': user})
+    else:
+        return redirect('/')
