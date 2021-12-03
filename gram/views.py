@@ -160,3 +160,18 @@ def user_profile(request, id):
         return render(request, 'user-profile.html', {'posts': posts, 'profile': profile, 'user': user})
     else:
         return redirect('/')
+
+
+# search for images
+@login_required(login_url='/accounts/login/')
+def search_posts(request):
+    if 'search' in request.GET and request.GET['search']:
+        search_term = request.GET.get('search').lower()
+        posts = Post.search_by_image_name(search_term)
+        message = f'{search_term}'
+        title = message
+
+        return render(request, 'search.html', {'success': message, 'posts': posts})
+    else:
+        message = 'You havent searched for any term'
+        return render(request, 'search.html', {'danger': message})
