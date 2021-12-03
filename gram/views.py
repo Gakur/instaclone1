@@ -126,3 +126,21 @@ def view_post(request, id):
         return render(request, 'picture.html', {'post': post, 'comments': comments, 'posts': related_posts, 'title': title})
     else:
         return redirect('/')
+
+
+# save comment
+@login_required(login_url='/accounts/login/')
+def add_comment(request):
+    if request.method == 'POST':
+        comment = request.POST['comment']
+        post_id = request.POST['post_id']
+        post = Post.objects.get(id=post_id)
+        user = request.user
+        comment = Comment(comment=comment, post_id=post_id, user_id=user.id)
+        comment.save_comment()
+        # increase the number of comments by 1 for the image
+        post.comments = post.comments + 1
+        post.save()
+        return redirect('/picture/' + str(post_id))
+    else:
+        return redirect('/')
