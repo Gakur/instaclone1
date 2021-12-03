@@ -110,3 +110,19 @@ def like_image(request, id):
         post.save()
         return redirect('/')
 
+
+# single image page with comments
+@login_required(login_url='/accounts/login/')
+def view_post(request, id):
+    post = Post.objects.get(id=id)
+    # get related images to the image that is being viewed by the user and order them by the date they were created
+    related_posts = Post.objects.filter(
+        user_id=post.user_id)
+    title = post.image_name
+    # check if image exists
+    if Post.objects.filter(id=id).exists():
+        # get all the comments for the image
+        comments = Comment.objects.filter(post_id=id)
+        return render(request, 'picture.html', {'post': post, 'comments': comments, 'posts': related_posts, 'title': title})
+    else:
+        return redirect('/')
