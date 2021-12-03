@@ -78,3 +78,13 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+
+# likes model
+class Like(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.likes
+
