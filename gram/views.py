@@ -2,9 +2,9 @@ from django.shortcuts import render
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import *
-# import cloudinary
-# import cloudinary.uploader
-# import cloudinary.api
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 # Create your views here.
 @login_required(login_url='/accounts/login/')
@@ -29,7 +29,7 @@ def new_post(request):
         image_name = request.POST['image_name']
         image_caption = request.POST['image_caption']
         image_file = request.FILES['image_file']
-        # image_file = cloudinary.uploader.upload(image_file)
+        image_file = cloudinary.uploader.upload(image_file)
         image_url = image_file['url']
         image = Post(image_name=image_name, image_caption=image_caption, image=image_url,
                       profile_id=request.POST['user_id'], user_id=request.POST['user_id'])
@@ -53,7 +53,7 @@ def update_profile(request):
         bio = request.POST['bio']
 
         profile_image = request.FILES['profile_pic']
-        # profile_image = cloudinary.uploader.upload(profile_image)
+        profile_image = cloudinary.uploader.upload(profile_image)
         profile_url = profile_image['url']
 
         user = User.objects.get(id=current_user.id)
