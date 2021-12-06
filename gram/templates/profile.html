@@ -29,7 +29,7 @@
                     {% if profile.profile_photo %}
                     <img src="{{profile.profile_photo.url}}" alt="" class="card-img-top">
                     {%else%}
-                    <img src="https://www.vectorstock.com/royalty-free-vector/user-icon-vector-19240492"
+                    <img src="{% static 'icons/profile.png'%}"
                         class="card-img-top" alt="My profile picture">
                     {% endif %}
                     <div class="card-body text-center">
